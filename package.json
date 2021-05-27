@@ -1,0 +1,14 @@
+{
+  "name": "game-kit",
+  "version": "0.1",
+  "author": "Jackson Frankland",
+  "license": "MIT",
+  "preset": "preset.ts",
+  "devDependencies": {
+    "@sveltejs/kit": "^1.0.0-next.1",
+    "apply": "^0.2.16",
+    "pixi.js": "^6.0.4",
+    "svelte": "^3.38.3"
+  },
+  "dependencies": {}
+}

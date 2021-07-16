@@ -1,5 +1,6 @@
 import type {Application, DisplayObject} from 'pixi.js';
-import type Actor from './Actor';
+import Actor from './Actor';
+import type Trait from './Trait';
 
 /**
  * A high level representation of the game.
@@ -24,6 +25,9 @@ export default class Game {
             }
             this.actors.forEach(actor => actor.update(delta));
         });
+        window.onresize = () => {
+            this.actors.forEach(actor => Promise.resolve(actor.draw?.(this.app)).then(() => {}));
+        };
     }
 
     get width () {
@@ -37,17 +41,21 @@ export default class Game {
     /**
      * Add an actor to the game.
      */
-    async addActor (actor: Actor) {
-        await actor.setup();
-        this.app.stage.addChild(actor.container);
+    addActor (actor: Actor) {
+        actor.setup();
+        Promise.resolve(actor.draw?.(this.app));
         actor.game = this;
         this.actors.push(actor);
+    }
+
+    createActor (...traits: Trait[]) {
+        this.addActor(new Actor(...traits))
     }
 
     /**
      * Add children to the application stage.
      */
-    addPixiChildren (...children: [DisplayObject]) {
+    addPixiChildren (...children: DisplayObject[]) {
         this.app.stage.addChild(...children);
     }
 

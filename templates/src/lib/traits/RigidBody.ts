@@ -1,5 +1,5 @@
-import Actor from '../core/Actor';
-import Trait from '../core/Trait';
+import type Actor from '../core/Actor';
+import type Trait from '../core/Trait';
 import {default as Vector, vec} from '../math/Vector';
 
 export default class RigidBody implements Trait {
@@ -14,11 +14,6 @@ export default class RigidBody implements Trait {
 
     constructor (public position = vec(0, 0), private adjustActor = true) {
         this.visualPosition = position.clone;
-    }
-
-    setup (actor: Actor) {
-        actor.position = this.adjustActor ? this.position.clone : actor.position;
-
     }
 
     fixedUpdate (_: Actor, fixedDelta: number) {

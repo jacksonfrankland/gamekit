@@ -1,9 +1,14 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     purge: ['./src/**/*.html', './src/**/*.svelte',],
     darkMode: false,
-    mode: 'jit',
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+            },
+        },
     },
     variants: {
         extend: {},

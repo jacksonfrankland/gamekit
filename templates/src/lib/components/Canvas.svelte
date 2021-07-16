@@ -1,4 +1,5 @@
 <script lang="ts">
+	export let game = new Game();
 	export let backgroundColor: number = null;
 	export let backgroundAlpha = 1;
 	export let classList = '';
@@ -8,17 +9,16 @@
     import {onMount} from 'svelte';
 	import type {Application} from 'pixi.js';
 
-	let application: Application;
     let container: HTMLElement;
-	let game: Game;
 
 	onMount(async () => {
-		const Pixi = await import('pixi.js');
-		let resolution = window.devicePixelRatio || 1;
-		application = new Pixi.Application({backgroundColor, backgroundAlpha, autoDensity: true, resolution, resizeTo: container});
-		container.appendChild(application.view);
-		game = new Game(application);
-		start(game);
+		if (!game.app) {
+			const Pixi = await import('pixi.js');
+			let resolution = window.devicePixelRatio || 1;
+			game.app = new Pixi.Application({backgroundColor, backgroundAlpha, autoDensity: true, resolution, resizeTo: container});
+		}
+		container.appendChild(game.app.view);
+		await Promise.resolve(start(game));
 	});
 </script>
 

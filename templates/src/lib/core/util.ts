@@ -1,4 +1,4 @@
-export function clone<T>(source: T): T {
+export function clone<T> (source: T): T {
     return Array.isArray(source)
         ? source.map(item => clone(item))
         : source instanceof Date
@@ -10,4 +10,8 @@ export function clone<T>(source: T): T {
                     return o;
                 }, Object.create(Object.getPrototypeOf(source)))
                 : source as T;
+}
+
+export function unique<T> (items: T[]): T[] {
+    return [...(new Set(items))];
 }
